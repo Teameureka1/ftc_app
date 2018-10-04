@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -43,7 +44,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *
  */
 
-@TeleOp(name="Example: MotorLimit", group="Examples")  // @Autonomous(...) is the other common choice
+@TeleOp(name="LiftTester", group="Examples")  // @Autonomous(...) is the other common choice
 //@Disabled
 public class LiftTest extends LinearOpMode {
 
@@ -53,6 +54,13 @@ public class LiftTest extends LinearOpMode {
 
     DcMotor motorArm = null;
 
+    //Servos
+    Servo servoLatch = null;
+
+    double CLOSED = 0.2;
+    double OPEN = 0.5;
+
+
     @Override
     public void runOpMode() throws InterruptedException {
         //adds feedback telemetry to DS
@@ -60,14 +68,14 @@ public class LiftTest extends LinearOpMode {
         telemetry.update();
 
          motorArm = hardwareMap.dcMotor.get("motorArm");
-
+         servoLatch = hardwareMap.servo.get("servoLatch");
         // eg: Set the drive motor directions:
          motorArm.setDirection(DcMotor.Direction.FORWARD); // Can change based on motor configuration
         // reset Encoder to zero
          motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-         motorArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // runs motor faster than when set to RUN_USING_ENCODER
-         //motorArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER); // not sure why this happens
+         //motorArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // runs motor faster than when set to RUN_USING_ENCODER
+         motorArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER); // Moter slower but more accurate
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Encoder", motorArm.getCurrentPosition());
@@ -96,7 +104,7 @@ public class LiftTest extends LinearOpMode {
                 motorArm.setPower(-gamepad1.right_trigger / 2.0); // let trigger run -motor
             }
 //
-            else if (!gamepad1.right_bumper && motorArm.getCurrentPosition() < 10000.0) //bumper NOT pressed AND encoder less than Max limit
+            else if (!gamepad1.right_bumper && motorArm.getCurrentPosition() < 3000.0) //bumper NOT pressed AND encoder less than Max limit
             {
                 motorArm.setPower(gamepad1.right_trigger / 2.0); //let trigger run +motor
             }
@@ -106,6 +114,15 @@ public class LiftTest extends LinearOpMode {
                 motorArm.setPower(0.0); // else not trigger, then set to off or some value of 'hold' power
             }
 
+            //Latch control
+            if(gamepad1.a) //button 'a' will open
+            {
+                servoLatch.setPosition(OPEN);
+            }
+            else if (gamepad1.b) //button 'b' will close
+            {
+                servoLatch.setPosition(CLOSED);
+            }
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }
