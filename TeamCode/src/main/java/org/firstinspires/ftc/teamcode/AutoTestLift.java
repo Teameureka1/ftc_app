@@ -23,7 +23,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.ExampleCode.HardwareSetupHolonomicExample;
 
 @Autonomous(name="Concept: Holonomic AutoByTime", group="Concept")
-@Disabled
+//@Disabled
 public class AutoTestLift extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -51,95 +51,67 @@ public class AutoTestLift extends LinearOpMode {
         /************************
          * Autonomous Code Below://
          *************************/
-        DriveForwardTime(DRIVE_POWER, 1000);
-        StopDrivingTime(1000);
-        DriveForwardTime(-DRIVE_POWER, 1000); //neg power drives backwards
-        StopDrivingTime(1000);
 
-        StrafeLeft(DRIVE_POWER, 1000);
-        StopDrivingTime(1000);
-        StrafeRight(DRIVE_POWER, 1000);
-        StopDrivingTime(1000);
+        LiftUp(DRIVE_POWER);
+        CloseLatch();
 
-/* currently no Servo configured on bot
-        RaiseArm();
-*/
-        SpinRight(DRIVE_POWER, 2000);
-        StopDrivingTime(1000);
-        SpinRight(DRIVE_POWER/2, 2000);
-        StopDrivingTime(1000);
+        LiftDown(DRIVE_POWER);
+        OpenLatch();
 
-        SpinLeft(DRIVE_POWER, 2000);
-        StopDrivingTime(1000);
-        SpinLeft(DRIVE_POWER/2, 2000);
-        StopDrivingTime(1000);
 
-        StopDriving();
+
+        HoldLift(); //need to create time parameter
 
     }//runOpMode
 
-    /** Below: Basic Drive Methods used in Autonomous code...**/
+    /** Below: Sub-Methods for autonomous control...**/
     //set Drive Power variable
     double DRIVE_POWER = 1.0;
 
-    public void DriveForward(double power)
+    //Control liftMotor
+    private void LiftUp(double power) {
+        // write the values to the motors
+
+        while ( robot.motorArm.getCurrentPosition() < 3000)
+        {
+            robot.motorArm.setPower(power);         //note:  should be able to run motor to a set position
+        }
+    }
+
+    private void LiftDown(double power)
     {
         // write the values to the motors
-        robot.motorArm = null;
+        while (robot.motorArm.getCurrentPosition() > 0.0 )
+        {
+            robot.motorArm.setPower(-power);
+        }
     }
-    public void DriveForwardTime(double power, long time) throws InterruptedException
+
+    private void HoldLift()
     {
-        DriveForward(power);
-        Thread.sleep(time);
+        LiftUp(0);
     }
 
-    public void StopDriving()
+    private void HoldLiftTime(double power, long time) throws InterruptedException
     {
-        DriveForward(0);
+       // HoldLift(0, time);
     }
 
-    public void StopDrivingTime(long time) throws InterruptedException
+
+
+ //Servo control
+ //
+ //
+   private void CloseLatch()
     {
-        DriveForwardTime(0, time);
+        robot.servoLatch.setPosition(.2); //note: uses servo instead of motor.
     }
 
-    public void StrafeLeft(double power, long time) throws InterruptedException
+    private void OpenLatch()
     {
-        // write the values to the motors
-        robot.motorArm = null;
-        Thread.sleep(time);
+        robot.servoLatch.setPosition(.5);
     }
 
-    public void StrafeRight(double power, long time) throws InterruptedException
-    {
-        StrafeLeft(-power, time);
-    }
-
-    public void SpinRight (double power, long time) throws InterruptedException
-    {
-        // write the values to the motors
-        robot.motorArm = null;
-        Thread.sleep(time);
-    }
-
-    public void SpinLeft (double power, long time) throws InterruptedException
-    {
-        SpinRight(-power, time);
-    }
-
-
-/*** Currently no Servo configured in Holonomic Hardware setup
-
-    public void RaiseArm()
-    {
-        robot.armServo.setPosition(.8); //note: uses servo instead of motor.
-    }
-
-    public void LowerArm()
-    {
-        robot.armServo.setPosition(.2);
-    }
-*/
 
 
 }//TestAutoDriveByTime
