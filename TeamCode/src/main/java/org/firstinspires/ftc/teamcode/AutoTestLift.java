@@ -1,16 +1,6 @@
 /*
-   Holonomic/Mecanum concept autonomous program. Driving motors for TIME
-
-   Robot wheel mapping:
-          X FRONT X
-        X           X
-      X  FL       FR  X
-              X
-             XXX
-              X
-      X  BL       BR  X
-        X           X
-          X       X
+    concept program for running liftArm and latch with autonomous programming.
+    uses encoder to determine lift max and min
 */
 package org.firstinspires.ftc.teamcode;
 
@@ -31,7 +21,7 @@ public class AutoTestLift extends LinearOpMode {
     /* Define Hardware setup */
     HardwareTestLift robot     =   new HardwareTestLift();
     /**
-     * Constructor
+     * Constructor allows calling this method from outside of this Class
      */
     public AutoTestLift() {
     }
@@ -52,15 +42,12 @@ public class AutoTestLift extends LinearOpMode {
          * Autonomous Code Below://
          *************************/
 
-        LiftUp(DRIVE_POWER);
-        CloseLatch();
-
-        LiftDown(DRIVE_POWER);
+        //Lower robot from hook by running lift up to 3000
+        encoderLiftDrive(DRIVE_POWER,3000,3000); //may need to adjust timeOut time
         OpenLatch();
 
-
-
-        HoldLift(); //need to create time parameter
+        //continue with autonomous programming to move robot to scoring position
+        
 
     }//runOpMode
 
@@ -68,35 +55,56 @@ public class AutoTestLift extends LinearOpMode {
     //set Drive Power variable
     double DRIVE_POWER = 1.0;
 
+    /*  Below is
+     *  Method which performs relative moves, based on encoder counts.
+     *  Encoders are NOT reset as the move is based on the current position.
+     *  Move will stop if any of three conditions occur:
+     *  1) Move gets to the desired position
+     *  2) Move runs out of time  NOTE: Ample time must be given to allow for position to be obtained
+     *  3) Driver stops the opmode running.
+     */
     //Control liftMotor
-    private void LiftUp(double power) {
-        // write the values to the motors
+    private void encoderLiftDrive(double speed,
+                             double setPosition,
+                             double timeoutS) {
+        int newTarget;
 
-        while ( robot.motorArm.getCurrentPosition() < 3000)
-        {
-            robot.motorArm.setPower(power);         //note:  should be able to run motor to a set position
+        // Ensure that the opMode is still active
+        if (opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            newTarget = robot.motorArm.getCurrentPosition() + (int)(setPosition);
+
+            robot.motorArm.setTargetPosition(newTarget);
+
+            // Turn On RUN_TO_POSITION
+            robot.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            robot.motorArm.setPower(Math.abs(speed));
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (robot.motorArm.isBusy()))
+            {
+
+                // Display it for the driver.
+                telemetry.addData("Path1",  "Running to %7d :%7d", newTarget);
+                telemetry.addData("Path2",  "Currently at %7d :%7d", robot.motorArm.getCurrentPosition());
+                telemetry.update();
+            }
+
+            // Stop all motion;
+            robot.motorArm.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            robot.motorArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+              sleep(250);   // optional pause after each move
         }
     }
-
-    private void LiftDown(double power)
-    {
-        // write the values to the motors
-        while (robot.motorArm.getCurrentPosition() > 0.0 )
-        {
-            robot.motorArm.setPower(-power);
-        }
-    }
-
-    private void HoldLift()
-    {
-        LiftUp(0);
-    }
-
-    private void HoldLiftTime(double power, long time) throws InterruptedException
-    {
-       // HoldLift(0, time);
-    }
-
 
 
  //Servo control

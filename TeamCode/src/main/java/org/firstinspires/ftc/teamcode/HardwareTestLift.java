@@ -28,9 +28,6 @@ public class HardwareTestLift {
     //servos
     Servo servoLatch = null;
 
-    double CLOSED = 0.2;
-    double OPEN = 0.5;
-
     //sensors
         //Add sensors here
 
@@ -38,11 +35,10 @@ public class HardwareTestLift {
     HardwareMap hwMap        = null;
 
     //Create and set default servo positions & MOTOR STOP variables.
-    //Possible servo values: 0.0 - 1.0  For CRServo 0.5=stop greater or less than will spin in that direction
-    //final static double CLOSED = 0.2;
-    //final static double OPEN = 0.8;
-    final static double MOTOR_STOP = 0.0; // sets motor power to zero
 
+    final static double MOTOR_STOP = 0.0; // sets motor power to zero
+    final static double CLOSED = 0.2;
+    final static double OPEN = 0.5;
     //CR servo variables
         //Add servo variable here
 
@@ -54,7 +50,7 @@ public class HardwareTestLift {
 
     //Initialize standard Hardware interfaces
     public void init(HardwareMap ahwMap) {
-        // Save referehce to Hardware map
+        // Save reference to Hardware map
         hwMap = ahwMap;
 
         /************************************************************
@@ -62,7 +58,6 @@ public class HardwareTestLift {
          ************************************************************/
         // Define Motors to match Robot Configuration File
         motorArm = hwMap.dcMotor.get("motorArm");
-        servoLatch = hwMap.servo.get("servoLatch");
 
         // eg: Set the drive motor directions:
         motorArm.setDirection(DcMotor.Direction.FORWARD); // Can change based on motor configuration
@@ -77,6 +72,7 @@ public class HardwareTestLift {
          ************************************************************/
 
             //Add servo configuration
+        servoLatch = hwMap.servo.get("servoLatch");
 
         /************************************************************
          * SENSOR SECTION
