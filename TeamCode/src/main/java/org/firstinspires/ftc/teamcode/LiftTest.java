@@ -21,33 +21,24 @@ public class LiftTest extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     //motors
 
-    DcMotor motorArm = null;
-
-    //Servos
-    Servo servoLatch = null;
-
-    double CLOSED = 0.2;
-    double OPEN = 0.5;
-
+    /* Define Hardware setup */
+    HardwareTestLift robot     =   new HardwareTestLift();
+    /**
+     * Constructor allows calling this method from outside of this Class
+     */
+    public LiftTest() {
+    }   
 
     @Override
     public void runOpMode() throws InterruptedException {
-        //adds feedback telemetry to DS
+        //adds feedback telemetry to Dc
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-         motorArm = hardwareMap.dcMotor.get("motorArm");
-         servoLatch = hardwareMap.servo.get("servoLatch");
-        // eg: Set the drive motor directions:
-         motorArm.setDirection(DcMotor.Direction.FORWARD); // Can change based on motor configuration
-        // reset Encoder to zero
-         motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-         //motorArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // runs motor faster than when set to RUN_USING_ENCODER
-         motorArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER); // Motor slower but more accurate encoder reading
-
+        robot.init(hardwareMap);  //Initialize hardware from the HardwareHolonomic Setup
+        
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Encoder", motorArm.getCurrentPosition());
+        telemetry.addData("Encoder", robot.motorArm.getCurrentPosition());
         telemetry.update();
 
 
@@ -62,43 +53,43 @@ public class LiftTest extends LinearOpMode {
         while (opModeIsActive()) {  // run until the end of the match (driver presses STOP)
             // Display running time and Encoder value
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Encoder Clicks", + motorArm.getCurrentPosition());
+            telemetry.addData("Encoder Clicks", + robot.motorArm.getCurrentPosition());
             telemetry.update();
 
             // Arm Control - Uses dual buttons to control motor direction.
             // Uses Encoder values to set upper and lower limits to protect motors from over-driving lift
             // May need to: Create additional encoder RESET button to correct for initial overdrive of encoder
 //
-            if (gamepad1.right_bumper && motorArm.getCurrentPosition() > -10) //bumper pressed AND encoder greater that lower limit
+            if (gamepad1.right_bumper && robot.motorArm.getCurrentPosition() > -10) //bumper pressed AND encoder greater that lower limit
             {
-                motorArm.setPower(-gamepad1.right_trigger / 2.0); // let trigger run -motor
+                robot.motorArm.setPower(-gamepad1.right_trigger / 2.0); // let trigger run -motor
             }
 //
-            else if (!gamepad1.right_bumper && motorArm.getCurrentPosition() < 3000) //bumper NOT pressed AND encoder less than Max limit
+            else if (!gamepad1.right_bumper && robot.motorArm.getCurrentPosition() < 3000) //bumper NOT pressed AND encoder less than Max limit
             {
-                motorArm.setPower(gamepad1.right_trigger / 2.0); //let trigger run +motor
+                robot.motorArm.setPower(gamepad1.right_trigger / 2.0); //let trigger run +motor
             }
 
             else
             {
-                motorArm.setPower(0.0); // else not trigger, then set to off or some value of 'hold' power
+                robot.motorArm.setPower(0.0); // else not trigger, then set to off or some value of 'hold' power
             }
 
             //Latch control
             if(gamepad1.a) //button 'a' will open
             {
-                servoLatch.setPosition(OPEN);
+                robot.servoLatch.setPosition(robot.OPEN);
             }
             else if (gamepad1.b) //button 'b' will close
             {
-                servoLatch.setPosition(CLOSED);
+                robot.servoLatch.setPosition(robot.CLOSED);
             }
 
             //Encoder reset
             if(gamepad1.dpad_up)
             {
                 // reset Encoder to zero
-                motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                robot.motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             }
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop

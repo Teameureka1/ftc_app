@@ -21,6 +21,10 @@ public class HardwareTestLift {
 
     //Drive motors
         //Add Motors here
+    public DcMotor motorFrontRight = null;
+    public DcMotor motorFrontLeft = null;
+    public DcMotor motorBackRight = null;
+    public DcMotor motorBackLeft = null;
 
     //Accessories motors
     DcMotor motorArm = null;
@@ -58,9 +62,14 @@ public class HardwareTestLift {
          ************************************************************/
         // Define Motors to match Robot Configuration File
         motorArm = hwMap.dcMotor.get("motorArm");
+        motorFrontLeft = hwMap.dcMotor.get("motorFL");
+        motorFrontRight = hwMap.dcMotor.get("motorFR");
+        motorBackLeft = hwMap.dcMotor.get("motorBL");
+        motorBackRight = hwMap.dcMotor.get("motorBR");
 
         // eg: Set the drive motor directions:
         motorArm.setDirection(DcMotor.Direction.FORWARD); // Can change based on motor configuration
+        motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
         // reset Encoder to zero
         motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 

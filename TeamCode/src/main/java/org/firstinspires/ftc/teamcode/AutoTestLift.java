@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.ExampleCode.HardwareSetupHolonomicExample;
 
-@Autonomous(name="Concept: Holonomic AutoByTime", group="Concept")
+@Autonomous(name="Auto test", group="Concept")
 //@Disabled
 public class AutoTestLift extends LinearOpMode {
 
@@ -43,8 +43,9 @@ public class AutoTestLift extends LinearOpMode {
          *************************/
 
         //Lower robot from hook by running lift up to 3000
-        encoderLiftDrive(DRIVE_POWER,3000,3000); //may need to adjust timeOut time
         OpenLatch();
+        encoderLiftDrive(DRIVE_POWER,3000,3000); //may need to adjust timeOut time
+
 
         //continue with autonomous programming to move robot to scoring position
         
