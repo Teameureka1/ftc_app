@@ -2,8 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.AnalogSensor;
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorDigitalTouch;
 
 
 /**
@@ -34,6 +37,16 @@ public class HardwareTestLift {
 
     //sensors
         //Add sensors here
+    //DigitalChannel sensorTouch = null;
+/**
+ * The REV Robotics Touch Sensor
+ * is treated as a digital channel.  It is HIGH if the button is unpressed.
+ * It pulls LOW if the button is pressed.
+ *
+ * Also, when you connect a REV Robotics Touch Sensor to the digital I/O port on the
+ * Expansion Hub using a 4-wire JST cable, the second pin gets connected to the Touch Sensor.
+ * The lower (first) pin stays unconnected.*
+ */
 
     /* local OpMode members. */
     HardwareMap hwMap        = null;
@@ -68,9 +81,11 @@ public class HardwareTestLift {
         motorBackRight = hwMap.dcMotor.get("motorBR");
 
         // eg: Set the drive motor directions:
-        motorArm.setDirection(DcMotor.Direction.FORWARD); // Can change based on motor configuration
+         // Can change based on motor configuration
         motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
-        // reset Encoder to zero
+
+        // set Arm dirction and reset Encoder to zero
+        motorArm.setDirection(DcMotor.Direction.FORWARD);
         motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //motorArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // runs motor faster than when set to RUN_USING_ENCODER
@@ -79,7 +94,6 @@ public class HardwareTestLift {
         /************************************************************
          * SERVO SECTION
          ************************************************************/
-
             //Add servo configuration
         servoLatch = hwMap.servo.get("servoLatch");
 
@@ -87,6 +101,11 @@ public class HardwareTestLift {
          * SENSOR SECTION
          ************************************************************/
             //Add sensors
+        // get a reference to our sensorTouch object.
+        //sensorTouch = hwMap.get(DigitalChannel.class, "limit");
+
+        // set the digital channel to input.
+        //sensorTouch.setMode(DigitalChannel.Mode.INPUT);
 
    }
 

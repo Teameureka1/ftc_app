@@ -19,7 +19,6 @@ public class LiftTest extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
-    //motors
 
     /* Define Hardware setup */
     HardwareTestLift robot     =   new HardwareTestLift();
@@ -60,7 +59,7 @@ public class LiftTest extends LinearOpMode {
             // Uses Encoder values to set upper and lower limits to protect motors from over-driving lift
             // May need to: Create additional encoder RESET button to correct for initial overdrive of encoder
 //
-            if (gamepad1.right_bumper && robot.motorArm.getCurrentPosition() > -10) //bumper pressed AND encoder greater that lower limit
+            if (gamepad1.right_bumper  ) //bumper pressed AND limit switch NOT pressed - (if the digital channel returns true it's HIGH and the button is unpressed.)
             {
                 robot.motorArm.setPower(-gamepad1.right_trigger / 2.0); // let trigger run -motor
             }

@@ -10,28 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.HardwareTestLift;
 
 
-/**
- *
- * Created by Maddie, FTC Team 4962, The Rockettes
- * version 1.0 Aug 11, 2016
- * This is an Iterative vs Linear program
- * for TeleOp control with a single controller
- */
 
-/*
-   Holonomic concepts from:
-   http://www.vexforum.com/index.php/12370-holonomic-drives-2-0-a-video-tutorial-by-cody/0
-   Robot wheel mapping:
-          X FRONT X
-        X           X
-      X  FL       FR  X
-              X
-             XXX
-              X
-      X  BL       BR  X
-        X           X
-          X       X
-*/
 @TeleOp(name = "TeleOp", group = "Examples")
 //@Disabled
 public class TeleOpHolonomicLift extends OpMode {
@@ -99,7 +78,7 @@ public class TeleOpHolonomicLift extends OpMode {
         // Uses Encoder values to set upper and lower limits to protect motors from over-driving lift
         // May need to: Create additional encoder RESET button to correct for initial overdrive of encoder
 //
-        if (gamepad2.right_bumper && robot.motorArm.getCurrentPosition() > -10) //bumper pressed AND encoder greater that lower limit
+        if (gamepad2.right_bumper )//bumper pressed AND encoder greater that lower limit
         {
             robot.motorArm.setPower(-gamepad2.right_trigger / 2.0); // let trigger run -motor
         }
@@ -133,13 +112,8 @@ public class TeleOpHolonomicLift extends OpMode {
 
        // idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
 
-
-
-
-
-
-
     }
+///////////////////////////////////////
 
     @Override
     public void stop() {
