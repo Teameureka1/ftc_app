@@ -30,14 +30,14 @@ public class HardwareTestLift {
     public DcMotor motorBackLeft = null;
 
     //Accessories motors
-    DcMotor motorArm = null;
+    public DcMotor motorArm = null;
 
     //servos
-    Servo servoLatch = null;
+    public Servo servoLatch = null;
 
     //sensors
         //Add sensors here
-    //DigitalChannel sensorTouch = null;
+    DigitalChannel sensorTouch = null;
 /**
  * The REV Robotics Touch Sensor
  * is treated as a digital channel.  It is HIGH if the button is unpressed.
@@ -102,10 +102,10 @@ public class HardwareTestLift {
          ************************************************************/
             //Add sensors
         // get a reference to our sensorTouch object.
-        //sensorTouch = hwMap.get(DigitalChannel.class, "limit");
+        sensorTouch = hwMap.get(DigitalChannel.class, "limit");
 
         // set the digital channel to input.
-        //sensorTouch.setMode(DigitalChannel.Mode.INPUT);
+        sensorTouch.setMode(DigitalChannel.Mode.INPUT);
 
    }
 

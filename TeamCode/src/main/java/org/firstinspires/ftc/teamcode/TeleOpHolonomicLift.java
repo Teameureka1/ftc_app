@@ -78,7 +78,7 @@ public class TeleOpHolonomicLift extends OpMode {
         // Uses Encoder values to set upper and lower limits to protect motors from over-driving lift
         // May need to: Create additional encoder RESET button to correct for initial overdrive of encoder
 //
-        if (gamepad2.right_bumper )//bumper pressed AND encoder greater that lower limit
+        if (gamepad2.right_bumper && robot.sensorTouch.getState() == true )//bumper pressed AND button not pressed
         {
             robot.motorArm.setPower(-gamepad2.right_trigger / 2.0); // let trigger run -motor
         }
@@ -91,6 +91,7 @@ public class TeleOpHolonomicLift extends OpMode {
         else
         {
             robot.motorArm.setPower(0.0); // else not trigger, then set to off or some value of 'hold' power
+
         }
 
         //Latch control
