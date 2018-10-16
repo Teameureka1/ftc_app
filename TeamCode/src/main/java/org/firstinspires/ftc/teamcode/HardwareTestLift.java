@@ -82,7 +82,7 @@ public class HardwareTestLift {
 
         // eg: Set the drive motor directions:
          // Can change based on motor configuration
-        motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+        //motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
 
         // set Arm dirction and reset Encoder to zero
         motorArm.setDirection(DcMotor.Direction.FORWARD);
