@@ -68,7 +68,7 @@ public class TeleOpHolonomicLift extends OpMode {
        * Telemetry for debugging
        */
         telemetry.addData("Text", "*** Robot Data***");
-        telemetry.addData("Arm ",  "Currently at %7d :%7d", robot.motorArm.getCurrentPosition());
+        telemetry.addData("Arm ",  "Currently at " + String.format("%.2", robot.motorArm.getCurrentPosition()));
         telemetry.addData("Joy XL YL XR",  String.format("%.2f", gamepad1LeftX) + " " + String.format("%.2f", gamepad1LeftY) + " " +  String.format("%.2f", gamepad1RightX));
         telemetry.addData("f left pwr",  "front left  pwr: " + String.format("%.2f", FrontLeft));
         telemetry.addData("f right pwr", "front right pwr: " + String.format("%.2f", FrontRight));
