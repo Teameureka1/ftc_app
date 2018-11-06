@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -21,7 +19,7 @@ public class LiftTest extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     /* Define Hardware setup */
-    HardwareTestLift robot     =   new HardwareTestLift();
+    Hardware10662 robot     =   new Hardware10662();
     /**
      * Constructor allows calling this method from outside of this Class
      */

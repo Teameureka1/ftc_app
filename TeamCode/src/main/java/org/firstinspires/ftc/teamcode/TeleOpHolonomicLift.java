@@ -1,21 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.teamcode.HardwareTestLift;
-
 
 
 @TeleOp(name = "TeleOp", group = "Examples")
 //@Disabled
 public class TeleOpHolonomicLift extends OpMode {
 
-    HardwareTestLift robot     =   new HardwareTestLift();
+    Hardware10662 robot     =   new Hardware10662();
 
     /**
      * Constructor
@@ -68,32 +63,54 @@ public class TeleOpHolonomicLift extends OpMode {
        * Telemetry for debugging
        */
         telemetry.addData("Text", "*** Robot Data***");
-        telemetry.addData("Arm ",  "Currently at " + String.format("%.2", robot.motorArm.getCurrentPosition()));
+        telemetry.addData("botLift ",  "Currently at " + String.format("%.2", robot.botLift.getCurrentPosition()));
+        telemetry.addData("bucketLift ",  "Currently at " + String.format("%.2", robot.bucketLift.getCurrentPosition()));
         telemetry.addData("Joy XL YL XR",  String.format("%.2f", gamepad1LeftX) + " " + String.format("%.2f", gamepad1LeftY) + " " +  String.format("%.2f", gamepad1RightX));
         telemetry.addData("f left pwr",  "front left  pwr: " + String.format("%.2f", FrontLeft));
         telemetry.addData("f right pwr", "front right pwr: " + String.format("%.2f", FrontRight));
         telemetry.addData("b right pwr", "back right pwr: " + String.format("%.2f", BackRight));
         telemetry.addData("b left pwr", "back left pwr: " + String.format("%.2f", BackLeft));
 
-// Arm Control - Uses dual buttons to control motor direction.
-        // Uses Encoder values to set upper and lower limits to protect motors from over-driving lift
+// bot lift Control - Uses dual buttons to control motor direction.
+        // Uses combo of Encoder button sensor values to set upper and lower limits to protect motors from over-driving lift
         // May need to: Create additional encoder RESET button to correct for initial overdrive of encoder
-//
+
         if (gamepad2.right_bumper && robot.sensorTouch.getState() == true )//bumper pressed AND button not pressed
         {
-            robot.motorArm.setPower(-gamepad2.right_trigger / 2.0); // let trigger run -motor
+            robot.botLift.setPower(-gamepad2.right_trigger / 2.0); // let trigger run -motor
         }
-//
-        else if (!gamepad2.right_bumper && robot.motorArm.getCurrentPosition() < 3000) //bumper NOT pressed AND encoder less than Max limit
+
+        else if (!gamepad2.right_bumper && robot.botLift.getCurrentPosition() < 3500) //bumper NOT pressed AND encoder less than Max limit
         {
-            robot.motorArm.setPower(gamepad2.right_trigger / 2.0); //let trigger run +motor
+            robot.botLift.setPower(gamepad2.right_trigger / 2.0); //let trigger run +motor
         }
 
         else
         {
-            robot.motorArm.setPower(0.0); // else not trigger, then set to off or some value of 'hold' power
+            robot.botLift.setPower(0.0); // else not trigger, then set to off or some value of 'hold' power
 
         }
+
+
+ // bucketLift Uses joy stick left
+
+    robot.bucketLift.setPower(gamepad2.left_stick_y);
+
+ //sweeper control
+
+        if(gamepad2.a) //button 'a'
+        {
+            robot.servoLatch.setPosition(0.2);// collects
+        }
+        else if (gamepad2.b) //button 'b'
+        {
+            robot.servoLatch.setPosition(0.8);// spit out
+        }
+        else
+        {
+            robot.servoLatch.setPosition(0.5); //sweeper stoped
+        }
+
 
         //Latch control
         if(gamepad2.a) //button 'a' will open
@@ -109,7 +126,7 @@ public class TeleOpHolonomicLift extends OpMode {
         if(gamepad2.dpad_up)
         {
             // reset Encoder to zero
-            robot.motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.botLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
 
        // idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop

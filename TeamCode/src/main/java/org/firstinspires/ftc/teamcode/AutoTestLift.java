@@ -5,12 +5,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.ExampleCode.HardwareSetupHolonomicExample;
 
 @Autonomous(name="Auto test", group="Concept")
 //@Disabled
@@ -19,7 +16,7 @@ public class AutoTestLift extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     /* Define Hardware setup */
-    HardwareTestLift robot     =   new HardwareTestLift();
+    Hardware10662 robot     =   new Hardware10662();
     /**
      * Constructor allows calling this method from outside of this Class
      */
@@ -74,34 +71,34 @@ public class AutoTestLift extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newTarget = robot.motorArm.getCurrentPosition() + (int)(setPosition);
+            newTarget = robot.botLift.getCurrentPosition() + (int)(setPosition);
 
-            robot.motorArm.setTargetPosition(newTarget);
+            robot.botLift.setTargetPosition(newTarget);
 
             // Turn On RUN_TO_POSITION
-            robot.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.botLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
-            robot.motorArm.setPower(Math.abs(speed));
+            robot.botLift.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.motorArm.isBusy()))
+                    (robot.botLift.isBusy()))
             {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d :%7d", newTarget);
-                telemetry.addData("Path2",  "Currently at %7d :%7d", robot.motorArm.getCurrentPosition());
+                telemetry.addData("Path2",  "Currently at %7d :%7d", robot.botLift.getCurrentPosition());
                 telemetry.update();
             }
 
             // Stop all motion;
-            robot.motorArm.setPower(0);
+            robot.botLift.setPower(0);
 
             // Turn off RUN_TO_POSITION
-            robot.motorArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.botLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
               sleep(250);   // optional pause after each move
         }

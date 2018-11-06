@@ -12,11 +12,11 @@ import org.firstinspires.ftc.robotcontroller.external.samples.SensorDigitalTouch
 /**
  * Created by TeameurekaRobotics on 12/30/2016
  *
- * This file contains an example Hardware Setup Class for a 1 motor and 1 servo.
+ * This file contains our Hardware Setup Class for 10662 competition bot
  *
  */
 
-public class HardwareTestLift {
+public class Hardware10662 {
 
    /* Declare Public OpMode members.
     *these are the null statements to make sure nothing is stored in the variables.
@@ -30,10 +30,12 @@ public class HardwareTestLift {
     public DcMotor motorBackLeft = null;
 
     //Accessories motors
-    public DcMotor motorArm = null;
+    public DcMotor botLift = null;
+    public DcMotor bucketLift = null;
 
     //servos
     public Servo servoLatch = null;
+    public Servo servoSweep =null;
 
     //sensors
         //Add sensors here
@@ -62,7 +64,7 @@ public class HardwareTestLift {
    /* Constructor   // this is not required as JAVA does it for you, but useful if you want to add
     * function to this method when called in OpModes.
     */
-    public HardwareTestLift() {
+    public Hardware10662() {
     }
 
     //Initialize standard Hardware interfaces
@@ -74,7 +76,8 @@ public class HardwareTestLift {
          * MOTOR SECTION
          ************************************************************/
         // Define Motors to match Robot Configuration File
-        motorArm = hwMap.dcMotor.get("motorArm");
+        botLift = hwMap.dcMotor.get("motorArm");
+        bucketLift = hwMap.dcMotor.get("motorBucket");
         motorFrontLeft = hwMap.dcMotor.get("motorFL");
         motorFrontRight = hwMap.dcMotor.get("motorFR");
         motorBackLeft = hwMap.dcMotor.get("motorBL");
@@ -84,18 +87,20 @@ public class HardwareTestLift {
          // Can change based on motor configuration
         //motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
 
-        // set Arm dirction and reset Encoder to zero
-        motorArm.setDirection(DcMotor.Direction.FORWARD);
-        motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //motorArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // runs motor faster than when set to RUN_USING_ENCODER
-        motorArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER); // Moter slower but more accurate
-
+        // set Arm and bucket dirction and reset Encoder to zero
+        botLift.setDirection(DcMotor.Direction.FORWARD);
+        botLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bucketLift.setDirection(DcMotor.Direction.FORWARD);
+        bucketLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //botLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // runs motor faster than when set to RUN_USING_ENCODER
+        botLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER); // Moter slower but more accurate
+        bucketLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         /************************************************************
          * SERVO SECTION
          ************************************************************/
             //Add servo configuration
         servoLatch = hwMap.servo.get("servoLatch");
+        servoSweep = hwMap.servo.get("servoLatch");
 
         /************************************************************
          * SENSOR SECTION
