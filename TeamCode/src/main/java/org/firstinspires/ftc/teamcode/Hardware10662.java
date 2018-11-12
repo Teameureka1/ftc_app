@@ -60,7 +60,8 @@ public class Hardware10662 {
     final static double OPEN = 0.5;
     //CR servo variables
         //Add servo variable here
-
+    boolean aCurrState = false;
+    boolean aPrevState = false;
    /* Constructor   // this is not required as JAVA does it for you, but useful if you want to add
     * function to this method when called in OpModes.
     */
@@ -76,8 +77,8 @@ public class Hardware10662 {
          * MOTOR SECTION
          ************************************************************/
         // Define Motors to match Robot Configuration File
-        botLift = hwMap.dcMotor.get("motorArm");
-        bucketLift = hwMap.dcMotor.get("motorBucket");
+        botLift = hwMap.dcMotor.get("botLift");
+        bucketLift = hwMap.dcMotor.get("bucketLift");
         motorFrontLeft = hwMap.dcMotor.get("motorFL");
         motorFrontRight = hwMap.dcMotor.get("motorFR");
         motorBackLeft = hwMap.dcMotor.get("motorBL");
@@ -100,7 +101,7 @@ public class Hardware10662 {
          ************************************************************/
             //Add servo configuration
         servoLatch = hwMap.servo.get("servoLatch");
-        servoSweep = hwMap.servo.get("servoLatch");
+        servoSweep = hwMap.servo.get("servoSweep");
 
         /************************************************************
          * SENSOR SECTION

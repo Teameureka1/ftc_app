@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name = "TeleOp", group = "Examples")
+@TeleOp(name = "TeleOp", group = "Comp")
 //@Disabled
 public class TeleOpHolonomicLift extends OpMode {
 
@@ -96,28 +96,31 @@ public class TeleOpHolonomicLift extends OpMode {
 
     robot.bucketLift.setPower(gamepad2.left_stick_y);
 
- //sweeper control
+        //sweeper control
 
-        if(gamepad2.a) //button 'a'
+
+
+        if (gamepad2.left_bumper) //button 'LB'collects
         {
-            robot.servoLatch.setPosition(0.2);// collects
+            robot.servoSweep.setPosition(0.2);
         }
-        else if (gamepad2.b) //button 'b'
+
+        else if (gamepad2.right_bumper) //button 'RB'Spits out
         {
-            robot.servoLatch.setPosition(0.8);// spit out
+            robot.servoSweep.setPosition(0.8);
         }
-        else
+        else if (gamepad2.b)
         {
-            robot.servoLatch.setPosition(0.5); //sweeper stoped
+            robot.servoSweep.setPosition(0.5); //sweeper stoped
         }
 
 
         //Latch control
-        if(gamepad2.a) //button 'a' will open
+        if(gamepad2.x) //button 'x' will open
         {
             robot.servoLatch.setPosition(robot.OPEN);
         }
-        else if (gamepad2.b) //button 'b' will close
+        else if (gamepad2.y) //button 'y' will close
         {
             robot.servoLatch.setPosition(robot.CLOSED);
         }

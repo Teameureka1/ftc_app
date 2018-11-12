@@ -35,7 +35,7 @@ public class LiftTest extends LinearOpMode {
         robot.init(hardwareMap);  //Initialize hardware from the HardwareHolonomic Setup
         
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Encoder", robot.motorArm.getCurrentPosition());
+        telemetry.addData("Encoder", robot.botLift.getCurrentPosition());
         telemetry.update();
 
 
@@ -50,7 +50,7 @@ public class LiftTest extends LinearOpMode {
         while (opModeIsActive()) {  // run until the end of the match (driver presses STOP)
             // Display running time and Encoder value
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Encoder Clicks", + robot.motorArm.getCurrentPosition());
+            telemetry.addData("Encoder Clicks", + robot.botLift.getCurrentPosition());
             telemetry.update();
 
             // Arm Control - Uses dual buttons to control motor direction.
@@ -59,17 +59,18 @@ public class LiftTest extends LinearOpMode {
 //
             if (gamepad1.right_bumper  ) //bumper pressed AND limit switch NOT pressed - (if the digital channel returns true it's HIGH and the button is unpressed.)
             {
-                robot.motorArm.setPower(-gamepad1.right_trigger / 2.0); // let trigger run -motor
+                robot.botLift.setPower(-gamepad1.right_trigger / 2.0); // let trigger run -motor
             }
 //
-            else if (!gamepad1.right_bumper && robot.motorArm.getCurrentPosition() < 3000) //bumper NOT pressed AND encoder less than Max limit
+            else if (!gamepad1.right_bumper && robot.botLift.getCurrentPosition() < 3000) //bumper NOT pressed AND encoder less than Max limit
+
             {
-                robot.motorArm.setPower(gamepad1.right_trigger / 2.0); //let trigger run +motor
+                robot.botLift.setPower(gamepad1.right_trigger / 2.0); //let trigger run +motor
             }
 
             else
             {
-                robot.motorArm.setPower(0.0); // else not trigger, then set to off or some value of 'hold' power
+                robot.botLift.setPower(0.0); // else not trigger, then set to off or some value of 'hold' power
             }
 
             //Latch control
@@ -86,7 +87,7 @@ public class LiftTest extends LinearOpMode {
             if(gamepad1.dpad_up)
             {
                 // reset Encoder to zero
-                robot.motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                robot.botLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             }
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
