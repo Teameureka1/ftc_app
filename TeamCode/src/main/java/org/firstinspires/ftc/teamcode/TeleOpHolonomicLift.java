@@ -12,11 +12,13 @@ public class TeleOpHolonomicLift extends OpMode {
 
     Hardware10662 robot     =   new Hardware10662();
 
+    int     armHoldPosition;             // reading of arm position when buttons released to hold
+    double  slopeVal         = 2000.0;   // increase or decrease to perfect
+
     /**
      * Constructor
      */
     public TeleOpHolonomicLift() {
-
     }
 
     @Override
@@ -93,15 +95,25 @@ public class TeleOpHolonomicLift extends OpMode {
         }
 
 
- // bucketLift Uses joy stick left
+    // bucketLift Using D-Pad
 
-    if (gamepad1.left_stick_y() == true )
-        robot.bucketLift.setPower(gamepad2.left_stick_y);
+    if (gamepad1.dpad_up )
+    {
+        robot.bucketLift.setPower(0.5); // bucket up
+        armHoldPosition = robot.bucketLift.getCurrentPosition(); // while the lift is moving, continuously reset the arm holding position
+    }
+    else if (gamepad1.dpad_down )
+    {
+        robot.bucketLift.setPower(-0.5); // bucket down
+        armHoldPosition = robot.bucketLift.getCurrentPosition(); // while the lift is moving, continuously reset the arm holding position
+    }
+    else
+    {
+        robot.bucketLift.setPower((double) (armHoldPosition - robot.bucketLift.getCurrentPosition()) / slopeVal);   // Note that if the lift is lower than desired position,
+    }
 
-        //sweeper control
 
-
-
+    //sweeper control
         if (gamepad2.left_bumper) //button 'LB'collects
         {
             robot.servoSweep.setPosition(0.2);
@@ -117,7 +129,7 @@ public class TeleOpHolonomicLift extends OpMode {
         }
 
 
-        //Latch control
+    //Latch control
         if(gamepad2.x) //button 'x' will open
         {
             robot.servoLatch.setPosition(robot.OPEN);
