@@ -61,28 +61,29 @@ public class TeleOpHolonomicLift extends OpMode {
 
       /*
        * Telemetry for debugging
-       */
+
         telemetry.addData("Text", "*** Robot Data***");
         telemetry.addData("botLift ",  "Currently at " + String.format("%.2", robot.botLift.getCurrentPosition()));
         telemetry.addData("bucketLift ",  "Currently at " + String.format("%.2", robot.bucketLift.getCurrentPosition()));
-        telemetry.addData("Joy XL YL XR",  String.format("%.2f", gamepad1LeftX) + " " + String.format("%.2f", gamepad1LeftY) + " " +  String.format("%.2f", gamepad1RightX));
+        telemetry.addData("Joy XL YL XR",  "Joy at " + String.format("%.2f", gamepad1LeftX) + " " + String.format("%.2f", gamepad1LeftY) + " " +  String.format("%.2f", gamepad1RightX));
         telemetry.addData("f left pwr",  "front left  pwr: " + String.format("%.2f", FrontLeft));
         telemetry.addData("f right pwr", "front right pwr: " + String.format("%.2f", FrontRight));
         telemetry.addData("b right pwr", "back right pwr: " + String.format("%.2f", BackRight));
         telemetry.addData("b left pwr", "back left pwr: " + String.format("%.2f", BackLeft));
+        */
 
 // bot lift Control - Uses dual buttons to control motor direction.
         // Uses combo of Encoder button sensor values to set upper and lower limits to protect motors from over-driving lift
         // May need to: Create additional encoder RESET button to correct for initial overdrive of encoder
 
-        if (gamepad2.right_bumper && robot.sensorTouch.getState() == true )//bumper pressed AND button not pressed
+        if (gamepad1.right_bumper && robot.sensorTouch.getState() == true )//bumper pressed AND button not pressed
         {
-            robot.botLift.setPower(-gamepad2.right_trigger / 2.0); // let trigger run -motor
+            robot.botLift.setPower(-gamepad1.right_trigger / 2.0); // let trigger run -motor
         }
 
-        else if (!gamepad2.right_bumper && robot.botLift.getCurrentPosition() < 3500) //bumper NOT pressed AND encoder less than Max limit
+        else if (!gamepad1.right_bumper && robot.botLift.getCurrentPosition() < 3500) //bumper NOT pressed AND encoder less than Max limit
         {
-            robot.botLift.setPower(gamepad2.right_trigger / 2.0); //let trigger run +motor
+            robot.botLift.setPower(gamepad1.right_trigger / 2.0); //let trigger run +motor
         }
 
         else
@@ -94,7 +95,8 @@ public class TeleOpHolonomicLift extends OpMode {
 
  // bucketLift Uses joy stick left
 
-    robot.bucketLift.setPower(gamepad2.left_stick_y);
+    if (gamepad1.left_stick_y() == true )
+        robot.bucketLift.setPower(gamepad2.left_stick_y);
 
         //sweeper control
 
@@ -140,40 +142,6 @@ public class TeleOpHolonomicLift extends OpMode {
     @Override
     public void stop() {
 
-    }
-
-    /*
-     * This method scales the joystick input so for low joystick values, the
-     * scaled value is less than linear.  This is to make it easier to drive
-     * the robot more precisely at slower speeds.
-     */
-    double scaleInput(double dVal)  {
-        double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
-                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
-
-        // get the corresponding index for the scaleInput array.
-        int index = (int) (dVal * 16.0);
-
-        // index should be positive.
-        if (index < 0) {
-            index = -index;
-        }
-
-        // index cannot exceed size of array minus 1.
-        if (index > 16) {
-            index = 16;
-        }
-
-        // get value from the array.
-        double dScale = 0.0;
-        if (dVal < 0) {
-            dScale = -scaleArray[index];
-        } else {
-            dScale = scaleArray[index];
-        }
-
-        // return scaled value.
-        return dScale;
     }
 
 }
