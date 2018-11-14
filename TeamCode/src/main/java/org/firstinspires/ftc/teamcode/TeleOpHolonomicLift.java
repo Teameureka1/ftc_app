@@ -12,7 +12,8 @@ public class TeleOpHolonomicLift extends OpMode {
 
     Hardware10662 robot     =   new Hardware10662();
 
-    int     armHoldPosition;             // reading of arm position when buttons released to hold
+    int     botLiftHoldPosition;         // reading of arm position when buttons released to hold
+    int     bucketLiftHoldPosition;        // reading of bucketLift position
     double  slopeVal         = 2000.0;   // increase or decrease to perfect
 
     /**
@@ -78,20 +79,21 @@ public class TeleOpHolonomicLift extends OpMode {
         // Uses combo of Encoder button sensor values to set upper and lower limits to protect motors from over-driving lift
         // May need to: Create additional encoder RESET button to correct for initial overdrive of encoder
 
-        if (gamepad1.right_bumper && robot.sensorTouch.getState() == true )//bumper pressed AND button not pressed
+        if (gamepad1.right_bumper && gamepad1.right_trigger >0.2 && robot.sensorTouch.getState() == true )//bumper pressed AND button not pressed
         {
             robot.botLift.setPower(-gamepad1.right_trigger / 2.0); // let trigger run -motor
+            botLiftHoldPosition = robot.botLift.getCurrentPosition(); // update hold position to current position
         }
 
-        else if (!gamepad1.right_bumper && robot.botLift.getCurrentPosition() < 3500) //bumper NOT pressed AND encoder less than Max limit
+        else if (!gamepad1.right_bumper && gamepad1.right_trigger >0.2 && robot.botLift.getCurrentPosition() < 3500) //bumper NOT pressed AND encoder less than Max limit
         {
             robot.botLift.setPower(gamepad1.right_trigger / 2.0); //let trigger run +motor
+            botLiftHoldPosition = robot.botLift.getCurrentPosition(); // update hold position to current position
         }
 
         else
         {
-            robot.botLift.setPower(0.0); // else not trigger, then set to off or some value of 'hold' power
-
+            robot.botLift.setPower((double) (botLiftHoldPosition - robot.botLift.getCurrentPosition()) / slopeVal);   // Note that if the lift is lower than desired position,
         }
 
 
@@ -100,16 +102,16 @@ public class TeleOpHolonomicLift extends OpMode {
     if (gamepad1.dpad_up )
     {
         robot.bucketLift.setPower(0.5); // bucket up
-        armHoldPosition = robot.bucketLift.getCurrentPosition(); // while the lift is moving, continuously reset the arm holding position
+        bucketLiftHoldPosition = robot.bucketLift.getCurrentPosition(); // while the lift is moving, continuously reset the arm holding position
     }
     else if (gamepad1.dpad_down )
     {
         robot.bucketLift.setPower(-0.5); // bucket down
-        armHoldPosition = robot.bucketLift.getCurrentPosition(); // while the lift is moving, continuously reset the arm holding position
+        bucketLiftHoldPosition = robot.bucketLift.getCurrentPosition(); // while the lift is moving, continuously reset the arm holding position
     }
     else
     {
-        robot.bucketLift.setPower((double) (armHoldPosition - robot.bucketLift.getCurrentPosition()) / slopeVal);   // Note that if the lift is lower than desired position,
+        robot.bucketLift.setPower((double) (bucketLiftHoldPosition - robot.bucketLift.getCurrentPosition()) / slopeVal);   // Note that if the lift is lower than desired position,
     }
 
 
