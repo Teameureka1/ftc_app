@@ -62,6 +62,8 @@ public class Hardware10662 {
         //Add servo variable here
     boolean aCurrState = false;
     boolean aPrevState = false;
+
+
    /* Constructor   // this is not required as JAVA does it for you, but useful if you want to add
     * function to this method when called in OpModes.
     */

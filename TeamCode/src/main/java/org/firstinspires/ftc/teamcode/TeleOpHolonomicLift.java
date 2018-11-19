@@ -13,7 +13,7 @@ public class TeleOpHolonomicLift extends OpMode {
     Hardware10662 robot     =   new Hardware10662();
 
     int     botLiftHoldPosition;         // reading of arm position when buttons released to hold
-    int     bucketLiftHoldPosition;        // reading of bucketLift position
+    int     bucketLiftHoldPosition;      // reading of bucketLift position
     double  slopeVal         = 2000.0;   // increase or decrease to perfect
 
     /**
@@ -63,7 +63,7 @@ public class TeleOpHolonomicLift extends OpMode {
         robot.motorBackRight.setPower(BackRight);
 
       /*
-       * Telemetry for debugging
+       * Telemetry for debugging  // !!GETTING A FORMAT CONVERSION ERROR SO THIS IS CURRENTY COMMENTED OUT!!!
 
         telemetry.addData("Text", "*** Robot Data***");
         telemetry.addData("botLift ",  "Currently at " + String.format("%.2", robot.botLift.getCurrentPosition()));
@@ -97,14 +97,14 @@ public class TeleOpHolonomicLift extends OpMode {
         }
 
 
-    // bucketLift Using D-Pad
+    // bucketLift Using D-Padr
 
-    if (gamepad1.dpad_up )
+    if (gamepad2.dpad_up )
     {
         robot.bucketLift.setPower(0.5); // bucket up
         bucketLiftHoldPosition = robot.bucketLift.getCurrentPosition(); // while the lift is moving, continuously reset the arm holding position
     }
-    else if (gamepad1.dpad_down )
+    else if (gamepad2.dpad_down )
     {
         robot.bucketLift.setPower(-0.5); // bucket down
         bucketLiftHoldPosition = robot.bucketLift.getCurrentPosition(); // while the lift is moving, continuously reset the arm holding position
