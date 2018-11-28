@@ -118,16 +118,16 @@ public class TeleOpHolonomicLift extends OpMode {
     //sweeper control
         if (gamepad2.left_bumper) //button 'LB'collects
         {
-            robot.servoSweep.setPosition(0.2);
+          robot.motorBucketSweep.setPower(0.5);
         }
 
         else if (gamepad2.right_bumper) //button 'RB'Spits out
         {
-            robot.servoSweep.setPosition(0.8);
+            robot.motorBucketSweep.setPower(-0.5);
         }
         else if (gamepad2.b)
         {
-            robot.servoSweep.setPosition(0.5); //sweeper stoped
+          robot.motorBucketSweep.setPower(0);
         }
 
 

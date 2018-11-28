@@ -53,26 +53,27 @@ public class HolonomicAutoDriveByTime10662 extends LinearOpMode {
         /************************
          * Autonomous Code Below://
          *************************/
+        //release pressure on latch
+        BotLift(-0.8,500);
 
-        //BotLift(-0.8,2000);
 
-       // robot.botLift.setPower(0.5); // l
-       // botLiftHoldPosition = robot.botLift.getCurrentPosition(); // update hold position to current position
-       // robot.botLift.setPower((double) (botLiftHoldPosition - robot.botLift.getCurrentPosition()) / slopeVal);   // Note that if the lift is lower than desired position,
 
-       // Latch(robot.OPEN);
-       // Thread.sleep(2500);
+        //unhooks bot from landing point
+        Latch(robot.OPEN);
+        Thread.sleep(2500);
 
-       // StrafeLeft(DRIVE_POWER, 2000);
-        //StopDrivingTime(1000);
 
-        //Sweep(DRIVE_POWER);
-        //sleep(2000);
 
+        robot.botLift.setPower(-0.5); // l
+        botLiftHoldPosition = robot.botLift.getCurrentPosition(); // update hold position to current position
+        robot.botLift.setPower((double) (botLiftHoldPosition - robot.botLift.getCurrentPosition()) / slopeVal);   // Note that if the lift is lower than desired position,
+
+        StrafeLeft(DRIVE_POWER, 1000);
+        StopDrivingTime(1000);
+
+        // forward to the crater
         DriveForwardTime(DRIVE_POWER, 3500);
         StopDrivingTime(1000);
-       // DriveForwardTime(-DRIVE_POWER, 1000); //neg power drives backwards
-       // StopDrivingTime(1000);
 
         //StrafeLeft(DRIVE_POWER, 1000);
         //StopDrivingTime(1000);
@@ -82,8 +83,8 @@ public class HolonomicAutoDriveByTime10662 extends LinearOpMode {
         //SpinRight(DRIVE_POWER, 1000);
         //StopDrivingTime(1000);
 
-        //Sweep(DRIVE_POWER);
-        //sleep(2000);
+        SweepOut();
+        sleep(2000);
 
         //robot.botLift(0.5,1000);
 
@@ -101,9 +102,9 @@ public class HolonomicAutoDriveByTime10662 extends LinearOpMode {
     {
         // write the values to the motors
         robot.motorFrontRight.setPower(power);//still need to test motor directions for desired movement
-        robot.motorFrontLeft.setPower(power);
+        robot.motorFrontLeft.setPower(-power);
         robot.motorBackRight.setPower(power);
-        robot.motorBackLeft.setPower(power);
+        robot.motorBackLeft.setPower(-power);
     }
 
     public void DriveForwardTime(double power, long time) throws InterruptedException
@@ -163,9 +164,13 @@ public class HolonomicAutoDriveByTime10662 extends LinearOpMode {
         robot.servoLatch.setPosition(pos);
     }
 
-    public void Sweep (double pos)
+    public void SweepIn ()
     {
-        robot.servoSweep.setPosition(pos);
+        robot.motorBucketSweep.setPower(0.5);
+    }
+    public void SweepOut ()
+    {
+      robot.motorBucketSweep.setPower(-0.5);
     }
     /*** Currently no Servo configured in Holonomic Hardware setup
 

@@ -28,6 +28,7 @@ public class Hardware10662 {
     public DcMotor motorFrontLeft = null;
     public DcMotor motorBackRight = null;
     public DcMotor motorBackLeft = null;
+    public DcMotor motorBucketSweep = null;
 
     //Accessories motors
     public DcMotor botLift = null;
@@ -35,7 +36,6 @@ public class Hardware10662 {
 
     //servos
     public Servo servoLatch = null;
-    public Servo servoSweep =null;
 
     //sensors
         //Add sensors here
@@ -57,7 +57,7 @@ public class Hardware10662 {
 
     final static double MOTOR_STOP = 0.0; // sets motor power to zero
     final static double CLOSED = 0.2;
-    final static double OPEN = 0.5;
+    final static double OPEN = 0.6;
     //CR servo variables
         //Add servo variable here
     boolean aCurrState = false;
@@ -85,6 +85,7 @@ public class Hardware10662 {
         motorFrontRight = hwMap.dcMotor.get("motorFR");
         motorBackLeft = hwMap.dcMotor.get("motorBL");
         motorBackRight = hwMap.dcMotor.get("motorBR");
+        motorBucketSweep = hwMap.dcMotor.get("motorSweep");
 
         // eg: Set the drive motor directions:
          // Can change based on motor configuration
@@ -103,7 +104,6 @@ public class Hardware10662 {
          ************************************************************/
             //Add servo configuration
         servoLatch = hwMap.servo.get("servoLatch");
-        servoSweep = hwMap.servo.get("servoSweep");
 
         /************************************************************
          * SENSOR SECTION
