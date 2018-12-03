@@ -15,16 +15,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.ExampleCode.HardwareSetupHolonomicExample;
-
-@Autonomous(name="AutoByTime", group="Comp")
+@Autonomous(name="AutoCrater", group="Comp")
 //@Disabled
-public class HolonomicAutoDriveByTime10662 extends LinearOpMode {
+public class AutoCrater extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -35,7 +31,7 @@ public class HolonomicAutoDriveByTime10662 extends LinearOpMode {
     Hardware10662 robot     =   new Hardware10662();    /**
      * Constructor
      */
-    public HolonomicAutoDriveByTime10662() {
+    public AutoCrater() {
     }
 
     @Override
@@ -54,8 +50,10 @@ public class HolonomicAutoDriveByTime10662 extends LinearOpMode {
          * Autonomous Code Below://
          *************************/
         //release pressure on latch
-        BotLift(-0.8,500);
-
+        //BotLift(-0.8,500);
+        //robot.botLift.setPower(-0.5); // l
+        //botLiftHoldPosition = robot.botLift.getCurrentPosition(); // update hold position to current position
+        //robot.botLift.setPower((double) (botLiftHoldPosition - robot.botLift.getCurrentPosition()) / slopeVal);   // Note that if the lift is lower than desired position,
 
 
         //unhooks bot from landing point
@@ -63,16 +61,11 @@ public class HolonomicAutoDriveByTime10662 extends LinearOpMode {
         Thread.sleep(2500);
 
 
-
-        robot.botLift.setPower(-0.5); // l
-        botLiftHoldPosition = robot.botLift.getCurrentPosition(); // update hold position to current position
-        robot.botLift.setPower((double) (botLiftHoldPosition - robot.botLift.getCurrentPosition()) / slopeVal);   // Note that if the lift is lower than desired position,
-
-        StrafeLeft(DRIVE_POWER, 1000);
+        StrafeLeft(DRIVE_POWER, 800);
         StopDrivingTime(1000);
 
         // forward to the crater
-        DriveForwardTime(DRIVE_POWER, 3500);
+        DriveForwardTime(DRIVE_POWER, 2000);
         StopDrivingTime(1000);
 
         //StrafeLeft(DRIVE_POWER, 1000);
