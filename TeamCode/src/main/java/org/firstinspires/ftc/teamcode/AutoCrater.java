@@ -60,24 +60,25 @@ public class AutoCrater extends LinearOpMode {
         Latch(robot.OPEN);
         Thread.sleep(2500);
 
-
+        //unhooks bot from landing point once bot is on the ground
         StrafeLeft(DRIVE_POWER, 800);
         StopDrivingTime(1000);
+        DriveForwardTime(DRIVE_POWER, 500);
+        StopDrivingTime(1000);
+        StrafeLeft(DRIVE_POWER, 800);
+        StopDrivingTime(1000);
+        DriveForwardTime(DRIVE_POWER, 500);
+        StopDrivingTime(1000);
 
-        // forward to the crater
+        //Forward to the crater
+        StrafeRight(DRIVE_POWER, 1600);
+        StopDrivingTime(1000);
         DriveForwardTime(DRIVE_POWER, 2000);
         StopDrivingTime(1000);
 
-        //StrafeLeft(DRIVE_POWER, 1000);
-        //StopDrivingTime(1000);
-        //StrafeRight(DRIVE_POWER, 1000);
-        //SpinLeft(DRIVE_POWER, 1000);
-        //StopDrivingTime(1000);
-        //SpinRight(DRIVE_POWER, 1000);
-        //StopDrivingTime(1000);
 
-        SweepOut();
-        sleep(2000);
+        //SweepOut();
+        //sleep(2000);
 
         //robot.botLift(0.5,1000);
 
