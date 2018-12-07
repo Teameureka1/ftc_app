@@ -64,18 +64,23 @@ public class AutoDepot extends LinearOpMode {
         Latch(robot.OPEN);
         Thread.sleep(2500);
 
+        //raise hook
+        BotLift(0.5, 100);
+        Thread.sleep(2000);
+        BotLift(0.0, 500);
+
         //unhooks bot from landing point once bot is on the ground
-        StrafeLeft(DRIVE_POWER, 800);
+        SpinLeft(DRIVE_POWER, 500);
         StopDrivingTime(1000);
 
         DriveForwardTime(DRIVE_POWER, 500);
         StopDrivingTime(1000);
+        
+        //Lines up with lander
+       DriveForwardTime(-DRIVE_POWER, 550);
 
-        StrafeLeft(DRIVE_POWER, 800);
-        StopDrivingTime(1000);
-
-        // forward to the crater
-        StrafeRight(DRIVE_POWER, 1600);
+        // forward to the Depot
+        StrafeRight(DRIVE_POWER, 800);
         StopDrivingTime(1000);
 
         DriveForwardTime(DRIVE_POWER, 2000);

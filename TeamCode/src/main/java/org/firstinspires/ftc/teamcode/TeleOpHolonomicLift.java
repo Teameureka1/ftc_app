@@ -58,8 +58,8 @@ public class TeleOpHolonomicLift extends OpMode {
 
         // write the values to the motors
         robot.motorFrontRight.setPower(FrontRight);
-        robot.motorFrontLeft.setPower(FrontLeft);
-        robot.motorBackLeft.setPower(BackLeft);
+        robot.motorFrontLeft.setPower(-FrontLeft);
+        robot.motorBackLeft.setPower(-BackLeft);
         robot.motorBackRight.setPower(BackRight);
 
       /*
@@ -79,14 +79,16 @@ public class TeleOpHolonomicLift extends OpMode {
         // Uses combo of Encoder button sensor values to set upper and lower limits to protect motors from over-driving lift
         // May need to: Create additional encoder RESET button to correct for initial overdrive of encoder
 
-        if (gamepad1.right_bumper && gamepad1.right_trigger >0.2 && robot.sensorTouch.getState() == true )//bumper pressed AND button not pressed
+        if (gamepad1.right_bumper && gamepad1.right_trigger >0.2 )//bumper pressed AND button not pressed
         {
+            //Hook down
             robot.botLift.setPower(-gamepad1.right_trigger / 2.0); // let trigger run -motor
             botLiftHoldPosition = robot.botLift.getCurrentPosition(); // update hold position to current position
         }
 
         else if (!gamepad1.right_bumper && gamepad1.right_trigger >0.2 && robot.botLift.getCurrentPosition() < 3500) //bumper NOT pressed AND encoder less than Max limit
         {
+            //hook up
             robot.botLift.setPower(gamepad1.right_trigger / 2.0); //let trigger run +motor
             botLiftHoldPosition = robot.botLift.getCurrentPosition(); // update hold position to current position
         }
@@ -132,17 +134,17 @@ public class TeleOpHolonomicLift extends OpMode {
 
 
     //Latch control
-        if(gamepad2.x) //button 'x' will open
+        if(gamepad1.x) //button 'x' will open
         {
             robot.servoLatch.setPosition(robot.OPEN);
         }
-        else if (gamepad2.y) //button 'y' will close
+        else if (gamepad1.y) //button 'y' will close
         {
             robot.servoLatch.setPosition(robot.CLOSED);
         }
 
         //Encoder reset
-        if(gamepad2.dpad_up)
+        if(gamepad1.dpad_up)
         {
             // reset Encoder to zero
             robot.botLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

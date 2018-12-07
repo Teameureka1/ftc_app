@@ -89,7 +89,8 @@ public class Hardware10662 {
 
         // eg: Set the drive motor directions:
          // Can change based on motor configuration
-        //motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorBackLeft.setDirection(DcMotor.Direction.REVERSE);
 
         // set Arm and bucket dirction and reset Encoder to zero
         botLift.setDirection(DcMotor.Direction.FORWARD);
@@ -110,10 +111,10 @@ public class Hardware10662 {
          ************************************************************/
             //Add sensors
         // get a reference to our sensorTouch object.
-        sensorTouch = hwMap.get(DigitalChannel.class, "limit");
+        //sensorTouch = hwMap.get(DigitalChannel.class, "limit");
 
         // set the digital channel to input.
-        sensorTouch.setMode(DigitalChannel.Mode.INPUT);
+        //FsensorTouch.setMode(DigitalChannel.Mode.INPUT);
 
    }
 

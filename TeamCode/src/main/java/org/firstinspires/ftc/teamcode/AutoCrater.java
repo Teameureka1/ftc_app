@@ -60,27 +60,26 @@ public class AutoCrater extends LinearOpMode {
         Latch(robot.OPEN);
         Thread.sleep(2500);
 
+        //raise hook
+        BotLift(0.5, 50);
+        Thread.sleep(2000);
+        BotLift(0.0, 500);
+
         //unhooks bot from landing point once bot is on the ground
-        StrafeLeft(DRIVE_POWER, 800);
+        SpinLeft(DRIVE_POWER, 500);
         StopDrivingTime(1000);
-        DriveForwardTime(DRIVE_POWER, 500);
-        StopDrivingTime(1000);
-        StrafeLeft(DRIVE_POWER, 800);
-        StopDrivingTime(1000);
+
         DriveForwardTime(DRIVE_POWER, 500);
         StopDrivingTime(1000);
 
+        //Drives bot back to square up with lander
+        DriveForwardTime(-DRIVE_POWER, 500);
+
         //Forward to the crater
-        StrafeRight(DRIVE_POWER, 1600);
-        StopDrivingTime(1000);
         DriveForwardTime(DRIVE_POWER, 2000);
         StopDrivingTime(1000);
 
 
-        //SweepOut();
-        //sleep(2000);
-
-        //robot.botLift(0.5,1000);
 
 
 
@@ -92,13 +91,13 @@ public class AutoCrater extends LinearOpMode {
     //set Drive Power variable
     double DRIVE_POWER = 1.0;
 
-    public void DriveForward(double power)
-    {
+        public void DriveForward(double power)
+        {
         // write the values to the motors
         robot.motorFrontRight.setPower(power);//still need to test motor directions for desired movement
-        robot.motorFrontLeft.setPower(-power);
+        robot.motorFrontLeft.setPower(power);
         robot.motorBackRight.setPower(power);
-        robot.motorBackLeft.setPower(-power);
+        robot.motorBackLeft.setPower(power);
     }
 
     public void DriveForwardTime(double power, long time) throws InterruptedException
