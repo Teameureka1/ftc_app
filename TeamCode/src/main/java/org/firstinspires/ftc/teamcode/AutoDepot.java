@@ -59,40 +59,27 @@ public class AutoDepot extends LinearOpMode {
         //botLiftHoldPosition = robot.botLift.getCurrentPosition(); // update hold position to current position
         //robot.botLift.setPower((double) (botLiftHoldPosition - robot.botLift.getCurrentPosition()) / slopeVal);   // Note that if the lift is lower than desired position,
 
-
-        //unlaches from landing point
+        //Bot lowers from lander
         Latch(robot.OPEN);
         Thread.sleep(2500);
 
         //raise hook
-        BotLift(0.5, 100);
+        BotLift(0.5, 30);
         Thread.sleep(2000);
         BotLift(0.0, 500);
 
         //unhooks bot from landing point once bot is on the ground
         SpinLeft(DRIVE_POWER, 500);
         StopDrivingTime(1000);
-
-        DriveForwardTime(DRIVE_POWER, 500);
+        DriveForwardTime(DRIVE_POWER, 200);
         StopDrivingTime(1000);
-        
-        //Lines up with lander
-       DriveForwardTime(-DRIVE_POWER, 550);
+        SpinLeft(-DRIVE_POWER, 500);
+        StopDrivingTime(1000);
+
 
         // forward to the Depot
-        StrafeRight(DRIVE_POWER, 800);
+        DriveForwardTime(DRIVE_POWER, 1400);
         StopDrivingTime(1000);
-
-        DriveForwardTime(DRIVE_POWER, 2000);
-        StopDrivingTime(1000);
-
-        //StrafeLeft(DRIVE_POWER, 1000);
-        //StopDrivingTime(1000);
-        //StrafeRight(DRIVE_POWER, 1000);
-        //SpinLeft(DRIVE_POWER, 1000);
-        //StopDrivingTime(1000);
-        //SpinRight(DRIVE_POWER, 1000);
-        //StopDrivingTime(1000);
 
         SweepOut();
         sleep(2000);
@@ -113,9 +100,9 @@ public class AutoDepot extends LinearOpMode {
     {
         // write the values to the motors
         robot.motorFrontRight.setPower(power);//still need to test motor directions for desired movement
-        robot.motorFrontLeft.setPower(-power);
+        robot.motorFrontLeft.setPower(power);
         robot.motorBackRight.setPower(power);
-        robot.motorBackLeft.setPower(-power);
+        robot.motorBackLeft.setPower(power);
     }
 
     public void DriveForwardTime(double power, long time) throws InterruptedException
@@ -181,7 +168,7 @@ public class AutoDepot extends LinearOpMode {
     }
     public void SweepOut ()
     {
-      robot.motorBucketSweep.setPower(-0.5);
+      robot.motorBucketSweep.setPower(0.5);
     }
     /*** Currently no Servo configured in Holonomic Hardware setup
 

@@ -62,9 +62,9 @@ public class TeleOpHolonomicLift extends OpMode {
         robot.motorBackLeft.setPower(-BackLeft);
         robot.motorBackRight.setPower(BackRight);
 
-      /*
-       * Telemetry for debugging  // !!GETTING A FORMAT CONVERSION ERROR SO THIS IS CURRENTY COMMENTED OUT!!!
 
+       //Telemetry for debugging  // !!GETTING A FORMAT CONVERSION ERROR SO THIS IS CURRENTY COMMENTED OUT!!!
+/*
         telemetry.addData("Text", "*** Robot Data***");
         telemetry.addData("botLift ",  "Currently at " + String.format("%.2", robot.botLift.getCurrentPosition()));
         telemetry.addData("bucketLift ",  "Currently at " + String.format("%.2", robot.bucketLift.getCurrentPosition()));
@@ -73,7 +73,7 @@ public class TeleOpHolonomicLift extends OpMode {
         telemetry.addData("f right pwr", "front right pwr: " + String.format("%.2f", FrontRight));
         telemetry.addData("b right pwr", "back right pwr: " + String.format("%.2f", BackRight));
         telemetry.addData("b left pwr", "back left pwr: " + String.format("%.2f", BackLeft));
-        */
+*/
 
 // bot lift Control - Uses dual buttons to control motor direction.
         // Uses combo of Encoder button sensor values to set upper and lower limits to protect motors from over-driving lift
@@ -86,7 +86,7 @@ public class TeleOpHolonomicLift extends OpMode {
             botLiftHoldPosition = robot.botLift.getCurrentPosition(); // update hold position to current position
         }
 
-        else if (!gamepad1.right_bumper && gamepad1.right_trigger >0.2 && robot.botLift.getCurrentPosition() < 3500) //bumper NOT pressed AND encoder less than Max limit
+        else if (!gamepad1.right_bumper && gamepad1.right_trigger >0.2 ) //bumper NOT pressed AND encoder less than Max limit
         {
             //hook up
             robot.botLift.setPower(gamepad1.right_trigger / 2.0); //let trigger run +motor

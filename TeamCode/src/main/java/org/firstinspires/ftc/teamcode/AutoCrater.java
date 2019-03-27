@@ -54,30 +54,30 @@ public class AutoCrater extends LinearOpMode {
         //robot.botLift.setPower(-0.5); // l
         //botLiftHoldPosition = robot.botLift.getCurrentPosition(); // update hold position to current position
         //robot.botLift.setPower((double) (botLiftHoldPosition - robot.botLift.getCurrentPosition()) / slopeVal);   // Note that if the lift is lower than desired position,
-
-
-        //unhooks bot from landing point
+        //Bot lowers from lander
         Latch(robot.OPEN);
         Thread.sleep(2500);
 
         //raise hook
-        BotLift(0.5, 50);
+        BotLift(0.4, 50);
         Thread.sleep(2000);
         BotLift(0.0, 500);
 
         //unhooks bot from landing point once bot is on the ground
         SpinLeft(DRIVE_POWER, 500);
         StopDrivingTime(1000);
-
-        DriveForwardTime(DRIVE_POWER, 500);
+        DriveForwardTime(DRIVE_POWER, 200);
+        StopDrivingTime(1000);
+        SpinLeft(-DRIVE_POWER, 500);
         StopDrivingTime(1000);
 
-        //Drives bot back to square up with lander
-        DriveForwardTime(-DRIVE_POWER, 500);
+        //Lines up with lander
+        //DriveForwardTime(-DRIVE_POWER, 550);
 
-        //Forward to the crater
-        DriveForwardTime(DRIVE_POWER, 2000);
+        // forward to the Depot
+        DriveForwardTime(0.6, 1100);
         StopDrivingTime(1000);
+
 
 
 
