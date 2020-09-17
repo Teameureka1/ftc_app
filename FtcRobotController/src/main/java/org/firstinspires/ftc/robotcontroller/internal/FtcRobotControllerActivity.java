@@ -551,12 +551,8 @@ public class FtcRobotControllerActivity extends Activity
     if (id == R.id.action_programming_mode) {
       if (cfgFileMgr.getActiveConfig().isNoConfig()) {
         // Tell the user they must configure the robot before starting programming mode.
-<<<<<<< HEAD
-        AppUtil.getInstance().showToast(UILocation.BOTH, context, context.getString(R.string.toastConfigureRobotBeforeProgrammingMode));
-=======
-        // TODO: as we are no longer truly 'modal' this warning should be adapted
-        AppUtil.getInstance().showToast(UILocation.BOTH, context.getString(R.string.toastConfigureRobotBeforeProgrammingMode));
->>>>>>> upstream/master
+
+
       } else {
         Intent programmingModeIntent = new Intent(AppUtil.getDefContext(), ProgrammingModeActivity.class);
         programmingModeIntent.putExtra(
